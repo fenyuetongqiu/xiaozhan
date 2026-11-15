@@ -1,7 +1,7 @@
 <template>
   <div class="wr-wrap">
     <div class="wr-room" ref="room" @click="drawer = null">
-      <img class="wr-base" src="/room/room.jpg" alt="大肥鱼的房间" />
+      <img class="wr-base" :src="$withBase('/room/room.jpg')" alt="大肥鱼的房间" />
 
       <!-- 天色：随真实时间变化的一层光 -->
       <div class="wr-sky" :style="skyStyle"></div>
@@ -169,7 +169,7 @@ export default {
       this.startWeather()
     },
     loadData() {
-      const get = (u) => fetch(u).then((r) => r.json()).catch(() => null)
+      const get = (u) => fetch(this.$withBase(u)).then((r) => r.json()).catch(() => null)
       Promise.all([get('/data/diary.json'), get('/data/memory.json')]).then(([d, m]) => {
         this.diary = (d && d.days) || []
         this.memories = (m && m.items) || []

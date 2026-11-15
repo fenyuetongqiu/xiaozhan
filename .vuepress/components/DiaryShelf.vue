@@ -55,7 +55,7 @@ export default {
     }
   },
   mounted () {
-    fetch('/data/diary.json')
+    fetch(this.$withBase('/data/diary.json'))
       .then(r => r.json())
       .then(d => { this.days = (d && d.days) || [] })
       .catch(() => { this.days = [] })

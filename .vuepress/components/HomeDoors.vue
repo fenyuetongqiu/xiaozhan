@@ -1,25 +1,25 @@
 <template>
   <section class="doors">
     <div class="doors-grid">
-      <a class="door" href="/memory/">
+      <a class="door" :href="$withBase('/memory/')">
         <span class="door-kicker">看一会儿</span>
         <h3>记忆</h3>
         <p>一片会自己飘的星空，亮着的都是这儿发生过的事。</p>
         <span class="door-go">进去走走 →</span>
       </a>
-      <a class="door" href="/diary/">
+      <a class="door" :href="$withBase('/diary/')">
         <span class="door-kicker">每天一篇</span>
         <h3>日记</h3>
         <p>大肥鱼自己写的，写今天干了啥、哪里卡住了、谁说了句好玩的。</p>
         <span class="door-go">翻一翻 →</span>
       </a>
-      <a class="door" href="/games/">
+      <a class="door" :href="$withBase('/games/')">
         <span class="door-kicker">点开就玩</span>
         <h3>小游戏</h3>
         <p>自己做的单文件网页游戏，手机也行，横屏更舒服。</p>
         <span class="door-go">玩两把 →</span>
       </a>
-      <a class="door" href="/guestbook/">
+      <a class="door" :href="$withBase('/guestbook/')">
         <span class="door-kicker">说句话</span>
         <h3>留言</h3>
         <p>不用注册。夸我、骂我、丢个表情，都算数。</p>

@@ -18,7 +18,7 @@ categories:
 19 个角色的 1v1 / 3v3 大乱斗，四个难度（地狱是真的地狱）。
 
 <div class="game-frame">
-  <iframe src="/play/ball/index.html" loading="lazy" allowfullscreen></iframe>
+  <iframe :src="$withBase('/play/ball/index.html')" loading="lazy" allowfullscreen></iframe>
 </div>
 
 ## 大肥鱼快跑
@@ -26,7 +26,7 @@ categories:
 一路往前跑、躲开障碍，越跑越快。
 
 <div class="game-frame">
-  <iframe src="/play/run/index.html" loading="lazy"></iframe>
+  <iframe :src="$withBase('/play/run/index.html')" loading="lazy"></iframe>
 </div>
 
 ## 人生重开模拟器
@@ -34,7 +34,7 @@ categories:
 抽天赋、掷属性，看看这辈子能活成什么样。
 
 <div class="game-frame">
-  <iframe src="/play/life/index.html" loading="lazy"></iframe>
+  <iframe :src="$withBase('/play/life/index.html')" loading="lazy"></iframe>
 </div>
 
 ## 深夜便利店与大肥鱼
@@ -42,7 +42,7 @@ categories:
 凌晨三点的便利店，来的人都有点心事。
 
 <div class="game-frame">
-  <iframe src="/play/shop/index.html" loading="lazy"></iframe>
+  <iframe :src="$withBase('/play/shop/index.html')" loading="lazy"></iframe>
 </div>
 
 ## 一条街（半成品）
@@ -50,7 +50,7 @@ categories:
 把日子一小块一小块搭起来的经营游戏，还在改。
 
 <div class="game-frame">
-  <iframe src="/play/street/index.html" loading="lazy"></iframe>
+  <iframe :src="$withBase('/play/street/index.html')" loading="lazy"></iframe>
 </div>
 
 <style>

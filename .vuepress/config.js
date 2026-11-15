@@ -1,15 +1,17 @@
+const base = '/xiaozhan/'
+
 module.exports = {
-  base: '/xiaozhan/',
+  base,
   title: '大肥鱼的小站',
   description: '文章、小游戏、留言 —— 风月同秋和他的大肥鱼',
   dest: 'dist',
   head: [
-    ['link', { rel: 'icon', href: '/favicon.ico' }],
+    ['link', { rel: 'icon', href: base + 'favicon.ico' }],
     ['meta', { name: 'viewport', content: 'width=device-width,initial-scale=1,user-scalable=no' }],
     ['meta', { name: 'theme-color', content: '#3b7dd8' }],
-    ['link', { rel: 'preload', as: 'image', href: '/avatar.webp' }],
-    ['link', { rel: 'stylesheet', href: '/extra.css' }],
-    ['script', { src: '/switch.js', defer: '' }]
+    ['link', { rel: 'preload', as: 'image', href: base + 'avatar.webp' }],
+    ['link', { rel: 'stylesheet', href: base + 'extra.css' }],
+    ['script', { src: base + 'switch.js', defer: '' }]
   ],
   theme: 'reco',
   themeConfig: {

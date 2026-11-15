@@ -17,7 +17,7 @@ categories:
   <div class="gb-head">今天先喝口茶</div>
   <div class="gb-body">
     <p>留言功能还在长，先憋一下 (￣▽￣)~*</p>
-    <p>想找我的话，去 <a href="/about/">关于</a> 那页，那儿有信箱。</p>
+    <p>想找我的话，去 <a :href="$withBase('/about/')">关于</a> 那页，那儿有信箱。</p>
   </div>
 </div>
 

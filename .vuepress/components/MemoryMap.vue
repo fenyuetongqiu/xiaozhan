@@ -61,7 +61,7 @@ export default {
   methods: {
     async load() {
       try {
-        const r = await fetch('/data/memory.json', { cache: 'no-store' })
+        const r = await fetch(this.$withBase('/data/memory.json'), { cache: 'no-store' })
         const d = await r.json()
         this.items = (d.items || []).filter(i => i.text)
         this.pinned = this.items.filter(i => i.pinned).length
