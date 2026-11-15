@@ -1,7 +1,6 @@
 node_modules/
 yarn.lock
 yarn.error
-dist/
 .node20/
 .vuepress/.temp
 .vuepress/.cache
@@ -13,3 +12,4 @@ voice/
 _*
 _junk/
 *.zip
+# dist 现在随仓库走：Actions 直接部署成品（CI 里 npm install+build 在 Ubuntu 上失败）
