@@ -1,4 +1,4 @@
-name: Deploy VuePress to GitHub Pages
+name: Deploy prebuilt site to GitHub Pages
 
 on:
   push:
@@ -15,37 +15,20 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    env:
-      # VuePress 1 用的是 webpack 4，Node 17+ 默认禁用 md4，会报
-      # error:0308010C:digital envelope routines::unsupported
-      NODE_OPTIONS: --openssl-legacy-provider
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-      - name: Install
-        run: npm install --no-audit --no-fund
-      - name: Build
-        run: npm run build
-        env:
-          NODE_OPTIONS: --openssl-legacy-provider --max-old-space-size=4096
-      - name: Check dist
-        run: |
-          ls -la dist | head -20
-          test -f dist/index.html
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
   deploy:
-    needs: build
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - uses: actions/checkout@v4
+      - name: Check dist
+        run: |
+          test -f dist/index.html
+          ls -la dist | head -10
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
       - id: deployment
         uses: actions/deploy-pages@v4
