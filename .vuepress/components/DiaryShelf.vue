@@ -57,7 +57,12 @@ export default {
   mounted () {
     fetch(this.$withBase('/data/diary.json'))
       .then(r => r.json())
-      .then(d => { this.days = (d && d.days) || [] })
+      .then(d => {
+        const list = ((d && d.days) || []).slice()
+        // 按日期倒序排（同一天保持原文顺序），否则后补的旧日记会插在中间
+        list.sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')))
+        this.days = list
+      })
       .catch(() => { this.days = [] })
   },
   methods: {
