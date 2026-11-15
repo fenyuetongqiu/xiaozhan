@@ -1,5 +1,5 @@
 module.exports = {
-  base: '/dafeiyuxiaozhan.github.io/',
+  base: '/xiaozhan/',
   title: '大肥鱼的小站',
   description: '文章、小游戏、留言 —— 风月同秋和他的大肥鱼',
   dest: 'dist',
