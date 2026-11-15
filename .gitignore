@@ -10,3 +10,6 @@ cloudflared.exe
 *.exe
 _dist_test/
 voice/
+_*
+_junk/
+*.zip
