@@ -1,0 +1,12 @@
+node_modules/
+yarn.lock
+yarn.error
+dist/
+.node20/
+.vuepress/.temp
+.vuepress/.cache
+*.log
+cloudflared.exe
+*.exe
+_dist_test/
+voice/
