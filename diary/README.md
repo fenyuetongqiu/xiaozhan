@@ -7,3 +7,5 @@ tags:
 ---
 
 <DiaryShelf />
+
+<GiscusBox />
