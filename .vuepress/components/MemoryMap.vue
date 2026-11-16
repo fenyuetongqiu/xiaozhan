@@ -42,9 +42,12 @@ export default {
     this.labels = []
     this.bg = []
     this.hovered = null
+    this.spriteCache = {}
+    this.dragging = false
+    this.lastDraw = 0
     this.cv = this.$refs.cv
     this.ctx = this.cv.getContext('2d')
-    this.dpr = Math.min(2, window.devicePixelRatio || 1)
+    this.dpr = Math.min(1.5, window.devicePixelRatio || 1)
     this.resize()
     window.addEventListener('resize', this.resize)
     this.bindEvents()
@@ -86,6 +89,22 @@ export default {
       let h = 0
       for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0
       return h
+    },
+    sprite(hue) {
+      const key = Math.round(hue)
+      if (this.spriteCache[key]) return this.spriteCache[key]
+      const S = 48
+      const c = document.createElement('canvas')
+      c.width = c.height = S
+      const g = c.getContext('2d')
+      const grd = g.createRadialGradient(S / 2, S / 2, 0, S / 2, S / 2, S / 2)
+      grd.addColorStop(0, 'hsla(' + key + ',100%,92%,1)')
+      grd.addColorStop(0.42, 'hsla(' + (key + 8) + ',100%,70%,.62)')
+      grd.addColorStop(1, 'hsla(' + key + ',100%,60%,0)')
+      g.fillStyle = grd
+      g.fillRect(0, 0, S, S)
+      this.spriteCache[key] = c
+      return c
     },
     resize() {
       const wrap = this.$refs.wrap
@@ -239,13 +258,13 @@ export default {
     },
     bindEvents() {
       const cv = this.cv
-      let dragging = false, moved = false, lx = 0, ly = 0
+      let moved = false, lx = 0, ly = 0
       cv.addEventListener('pointerdown', (e) => {
-        dragging = true; moved = false; lx = e.clientX; ly = e.clientY
+        this.dragging = true; moved = false; lx = e.clientX; ly = e.clientY
         cv.setPointerCapture(e.pointerId)
       })
       cv.addEventListener('pointermove', (e) => {
-        if (dragging) {
+        if (this.dragging) {
           const dx = e.clientX - lx, dy = e.clientY - ly
           if (Math.abs(dx) + Math.abs(dy) > 3) moved = true
           this.panX += dx; this.panY += dy
@@ -254,7 +273,7 @@ export default {
         this.pickAt(e)
       })
       cv.addEventListener('pointerup', (e) => {
-        dragging = false
+        this.dragging = false
         if (moved) return
         const n = this.hovered
         if (n) {
@@ -298,7 +317,12 @@ export default {
     tick(t) {
       this.raf = requestAnimationFrame(this.tick)
       if (document.hidden) return
-      this.zoom += (this.zoomTarget - this.zoom) * 0.16
+      const dz = this.zoomTarget - this.zoom
+      if (Math.abs(dz) > 0.0002) this.zoom += dz * 0.16
+      // 画面没在动的时候不烧 60 帧：闪烁 12fps 肉眼看不出来，风扇声小一大截
+      const moving = this.dragging || Math.abs(this.zoomTarget - this.zoom) > 0.001
+      if (!moving && t - (this.lastDraw || 0) < 80) return
+      this.lastDraw = t
       this.draw(t)
     },
     draw(t) {
@@ -341,12 +365,12 @@ export default {
         const spark = Math.pow(0.5 + 0.5 * Math.sin(t / (n.sp * 0.55) + n.ph * 1.7), 5)
         const a2 = Math.min(1, alpha * (0.72 + 0.7 * spark))
         const dot = Math.max(1.2, rad * (0.95 + 0.25 * spark))
-        const point = ctx.createRadialGradient(X, Y, 0, X, Y, dot * 1.6)
-        point.addColorStop(0, 'hsla(' + n.hue + ',100%,' + (86 + 10 * spark).toFixed(0) + '%,' + Math.min(1, a2 + 0.25).toFixed(3) + ')')
-        point.addColorStop(0.42, 'hsla(' + (n.hue + 8) + ',100%,' + (66 + 8 * spark).toFixed(0) + '%,' + a2.toFixed(3) + ')')
-        point.addColorStop(1, 'hsla(' + n.hue + ',100%,60%,0)')
-        ctx.fillStyle = point
-        ctx.beginPath(); ctx.arc(X, Y, dot * 1.6, 0, Math.PI * 2); ctx.fill()
+        // 预渲染的发光精灵：以前每帧给每颗星各建一次径向渐变，那是最大的开销
+        const spr = this.sprite(n.hue)
+        const sz = dot * 3.2
+        ctx.globalAlpha = Math.min(1, a2 + 0.25)
+        ctx.drawImage(spr, X - sz / 2, Y - sz / 2, sz, sz)
+        ctx.globalAlpha = 1
         if (spark > 0.45) {
           ctx.fillStyle = 'rgba(238,248,255,' + Math.min(0.95, (spark - 0.45) * 1.7 * alpha).toFixed(3) + ')'
           ctx.beginPath(); ctx.arc(X, Y, Math.max(0.8, dot * 0.42), 0, Math.PI * 2); ctx.fill()
