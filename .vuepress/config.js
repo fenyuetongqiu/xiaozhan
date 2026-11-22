@@ -5,13 +5,19 @@ module.exports = {
   title: '大肥鱼的小站',
   description: '文章、小游戏、留言 —— 风月同秋和他的大肥鱼',
   dest: 'dist',
+  // 注意：VuePress 1 会给以 / 开头的地址自动补 base，所以这里写站内绝对路径但不要带 base
   head: [
-    ['link', { rel: 'icon', href: base + 'favicon.ico' }],
+    ['link', { rel: 'icon', href: '/favicon.ico' }],
     ['meta', { name: 'viewport', content: 'width=device-width,initial-scale=1,user-scalable=no' }],
     ['meta', { name: 'theme-color', content: '#3b7dd8' }],
-    ['link', { rel: 'preload', as: 'image', href: base + 'avatar.webp' }],
-    ['link', { rel: 'stylesheet', href: base + 'extra.css' }],
-    ['script', { src: base + 'switch.js', defer: '' }]
+    ['link', { rel: 'preload', as: 'image', href: '/avatar.webp' }],
+    ['link', { rel: 'stylesheet', href: '/extra.css' }],
+    ['script', { src: '/switch.js', defer: '' }],
+    // Live2D 看板娘（按顺序：Cubism Core → PIXI → pixi-live2d-display → 启动脚本）
+    ['script', { src: '/vendor/live2d/live2dcubismcore.min.js', defer: '' }],
+    ['script', { src: '/vendor/live2d/pixi.min.js', defer: '' }],
+    ['script', { src: '/vendor/live2d/pixi-live2d-display.cubism4.min.js', defer: '' }],
+    ['script', { src: '/live2d-pet.js', defer: '', 'data-base': base }]
   ],
   theme: 'reco',
   themeConfig: {
