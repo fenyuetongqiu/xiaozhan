@@ -61,10 +61,10 @@
   btn.addEventListener('mouseleave', function () { btn.style.opacity = '.42'; });
 
   var tip = document.createElement('div');
-  tip.textContent = '模型 DeepSeek-chan（大肥鱼）｜原画 神宫凉子｜Live2D 霓虹猫_NeonNeko';
+  tip.innerHTML = '模型 DeepSeek-chan（大肥鱼）<br>原画 神宫凉子 · Live2D 霓虹猫_NeonNeko';
   tip.style.cssText = [
-    'position:absolute', 'left:0', 'right:0', 'bottom:0', 'height:13px', 'overflow:hidden',
-    'white-space:nowrap', 'text-align:center', 'font-size:9px', 'line-height:13px',
+    'position:absolute', 'left:0', 'right:0', 'bottom:0', 'height:22px', 'overflow:hidden',
+    'white-space:normal', 'text-align:center', 'font-size:8px', 'line-height:11px',
     'color:rgba(205,220,240,.62)', 'background:rgba(8,12,20,.38)',
     'pointer-events:none', 'letter-spacing:.2px', 'border-radius:0 0 2px 2px'
   ].join(';');
